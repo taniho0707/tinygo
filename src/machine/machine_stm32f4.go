@@ -152,40 +152,6 @@ const (
 	PH13 = portH + 13
 	PH14 = portH + 14
 	PH15 = portH + 15
-
-	PI0  = portI + 0
-	PI1  = portI + 1
-	PI2  = portI + 2
-	PI3  = portI + 3
-	PI4  = portI + 4
-	PI5  = portI + 5
-	PI6  = portI + 6
-	PI7  = portI + 7
-	PI8  = portI + 8
-	PI9  = portI + 9
-	PI10 = portI + 10
-	PI11 = portI + 11
-	PI12 = portI + 12
-	PI13 = portI + 13
-	PI14 = portI + 14
-	PI15 = portI + 15
-
-	PK0  = portK + 0
-	PK1  = portK + 1
-	PK2  = portK + 2
-	PK3  = portK + 3
-	PK4  = portK + 4
-	PK5  = portK + 5
-	PK6  = portK + 6
-	PK7  = portK + 7
-	PK8  = portK + 8
-	PK9  = portK + 9
-	PK10 = portK + 10
-	PK11 = portK + 11
-	PK12 = portK + 12
-	PK13 = portK + 13
-	PK14 = portK + 14
-	PK15 = portK + 15
 )
 
 func (p Pin) getPort() *stm32.GPIO_Type {
@@ -206,12 +172,6 @@ func (p Pin) getPort() *stm32.GPIO_Type {
 		return stm32.GPIOG
 	case 7:
 		return stm32.GPIOH
-	case 8:
-		return stm32.GPIOI
-	case 9:
-		return stm32.GPIOJ
-	case 10:
-		return stm32.GPIOK
 	default:
 		panic("machine: unknown port")
 	}
@@ -409,7 +369,6 @@ var (
 			TimerChannel{Pins: []PinFunction{{PH10, AF2_TIM3_4_5}}},
 			TimerChannel{Pins: []PinFunction{{PH11, AF2_TIM3_4_5}}},
 			TimerChannel{Pins: []PinFunction{{PH12, AF2_TIM3_4_5}}},
-			TimerChannel{Pins: []PinFunction{{PI0, AF2_TIM3_4_5}}},
 		},
 		busFreq: APB1_TIM_FREQ,
 	}
@@ -445,10 +404,10 @@ var (
 		EnableFlag:     stm32.RCC_APB2ENR_TIM8EN,
 		Device:         stm32.TIM8,
 		Channels: [4]TimerChannel{
-			TimerChannel{Pins: []PinFunction{{PC6, AF3_TIM8_9_10_11}, {PI5, AF3_TIM8_9_10_11}}},
-			TimerChannel{Pins: []PinFunction{{PC7, AF3_TIM8_9_10_11}, {PI6, AF3_TIM8_9_10_11}}},
-			TimerChannel{Pins: []PinFunction{{PC8, AF3_TIM8_9_10_11}, {PI7, AF3_TIM8_9_10_11}}},
-			TimerChannel{Pins: []PinFunction{{PC9, AF3_TIM8_9_10_11}, {PI2, AF3_TIM8_9_10_11}}},
+			TimerChannel{Pins: []PinFunction{{PC6, AF3_TIM8_9_10_11}}},
+			TimerChannel{Pins: []PinFunction{{PC7, AF3_TIM8_9_10_11}}},
+			TimerChannel{Pins: []PinFunction{{PC8, AF3_TIM8_9_10_11}}},
+			TimerChannel{Pins: []PinFunction{{PC9, AF3_TIM8_9_10_11}}},
 		},
 		busFreq: APB2_TIM_FREQ,
 	}
@@ -613,11 +572,6 @@ const (
 	ARR_MAX = 0x10000
 	PSC_MAX = 0x10000
 )
-
-func initRNG() {
-	stm32.RCC.AHB2ENR.SetBits(stm32.RCC_AHB2ENR_RNGEN)
-	stm32.RNG.CR.SetBits(stm32.RNG_CR_RNGEN)
-}
 
 // Alternative peripheral pin functions
 const (
